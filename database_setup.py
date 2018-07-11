@@ -26,8 +26,7 @@ class MenuItem(Base):
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
     restaurant = relationship(Restaurant)
 
-# We added this serialize function to be able to send JSON objects in a
-# serializable format
+
     @property
     def serialize(self):
 
