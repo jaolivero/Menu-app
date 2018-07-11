@@ -1,12 +1,12 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
 
-# import CRUD Operations from Lesson 1 ##
+
 from database_setup import Base, Restaurant, MenuItem
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Create session and connect to DB ##
+
 engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -17,7 +17,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            # Objective 3 Step 2 - Create /restaurants/new page
+            
             if self.path.endswith("/restaurants/new"):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
@@ -71,7 +71,7 @@ class webServerHandler(BaseHTTPRequestHandler):
             if self.path.endswith("/restaurants"):
                 restaurants = session.query(Restaurant).all()
                 output = ""
-                # Objective 3 Step 1 - Create a Link to create a new menu item
+              
                 output += "<a href = '/restaurants/new' > Make a New Restaurant Here </a></br></br>"
 
                 self.send_response(200)
@@ -81,12 +81,11 @@ class webServerHandler(BaseHTTPRequestHandler):
                 for restaurant in restaurants:
                     output += restaurant.name
                     output += "</br>"
-                    # Objective 2 -- Add Edit and Delete Links
-                    # Objective 4 -- Replace Edit href
+                    
 
                     output += "<a href ='/restaurants/%s/edit' >Edit </a> " % restaurant.id
                     output += "</br>"
-                    # Objective 5 -- Replace Delete href
+                   
                     output += "<a href ='/restaurants/%s/delete'> Delete </a>" % restaurant.id
                     output += "</br></br></br>"
 
@@ -96,7 +95,7 @@ class webServerHandler(BaseHTTPRequestHandler):
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
 
-    # Objective 3 Step 3- Make POST method
+   
     def do_POST(self):
         try:
             if self.path.endswith("/delete"):
